@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import * as math from 'mathjs';
-import { cos, permutations } from 'mathjs';
+
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [1,2,3],
+      data: [1,2,3,4],
       display: 6
     };
 
@@ -28,7 +28,6 @@ class App extends React.Component {
             }
             permute(input);
             input.splice(i, 0, ch);
-          
             usedChars.pop();
           }
           // return permArr
@@ -36,6 +35,9 @@ class App extends React.Component {
     permute(arr);
     // display permutations
     let list = document.querySelector("#perms");
+    while (list.hasChildNodes()) {
+      list.removeChild(list.childNodes[0]);
+    }
     permArr.forEach((i) => {
       let span = document.createElement('span');
       list.appendChild(span);
@@ -75,13 +77,13 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Data Set:
-            <input type="text" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]} />
+            <input type="text" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3,4]} />
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <div class="display">
+        <div className="display">
           <h3>Permutations</h3>
-          <div class="total">total: { this.state.display }</div>
+          <div className="total">total: { this.state.display }</div>
           <div id="perms"></div>
         </div>
       </div>
