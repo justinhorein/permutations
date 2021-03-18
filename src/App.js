@@ -11,7 +11,8 @@ class App extends React.Component {
       // default
       data: [1,2,3],
       display: 6,
-      totPerms: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+      totPerms: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]],
+      error: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -51,13 +52,23 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({data: event.target.value.split(',')});
+    let error = this.state.error;
+    const {value} = event.target;
+
+    error = value.length === 0 ? "Input can't be blank!": "";
+    this.setState({error:error});
   }
 
 
   handleSubmit(event) {
+    if (this.state.error === "") {
     alert('Data was submitted: ' + this.state.data);
     event.preventDefault();
     this.compPerms(this.state.data);
+    } else {
+      alert("Input can't be blank!");
+      event.preventDefault();
+    }
   }
 
   render() {
@@ -66,10 +77,12 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Data Set:
-            <input type="text" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]} />
+            <input type="text" name="input" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]} />
           </label>
           <input type="submit" value="Submit" />
+          <div className="error">{this.state.error}</div>
         </form>
+        <div className="error"></div>
         <div className="display">
           <h3>Permutations</h3>
           <div className="total">total: { this.state.display }</div>
