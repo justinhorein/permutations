@@ -8,9 +8,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // default
       data: [1,2,3],
       display: 6,
-      totPerms: [[1,2,3],[1,3,2]]
+      totPerms: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
     };
 
     this.handleChange = this.handleChange.bind(this);
