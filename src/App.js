@@ -75,7 +75,7 @@ class App extends React.Component {
           <div className="total">total: { this.state.display }</div>
           <div id="perms">
             {this.state.totPerms.map(item => (
-              <span key={item}>{item}</span>
+              <span key={item}>{item.toString()}</span>
             ))}
           </div>
         </div>
