@@ -8,8 +8,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [1,2,3,4],
-      display: 6
+      data: [1,2,3],
+      display: 6,
+      totPerms: [[1,2,3],[1,3,2]]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,44 +31,31 @@ class App extends React.Component {
             input.splice(i, 0, ch);
             usedChars.pop();
           }
-          // return permArr
     } 
     permute(arr);
-    // display permutations
-    let list = document.querySelector("#perms");
-    while (list.hasChildNodes()) {
-      list.removeChild(list.childNodes[0]);
-    }
-    permArr.forEach((i) => {
-      let span = document.createElement('span');
-      list.appendChild(span);
-      span.innerHTML += i;
-    })
+
+    return permArr;
 }
 
   compPerms(n) {
     // number of items in array
     let count = n.length;
-    // number of possible permutations
+    // get total number of possible perms and save to state
     let num = math.permutations(count);
-    // Get list of all permutations
-    this.permutations(n);
-    // console.log(perms);
-    // update state
     this.setState({display: num})
-    // console.log(this.state.totalPerms);
+    // get array of all possible perms and save to state
+    let totPerms = this.permutations(n);
+    this.setState({totPerms: totPerms});
   }
 
   handleChange(event) {
     this.setState({data: event.target.value.split(',')});
-    // console.log(this.state.data)
   }
 
 
   handleSubmit(event) {
     alert('Data was submitted: ' + this.state.data);
     event.preventDefault();
-    // this.setState({data:})
     this.compPerms(this.state.data);
   }
 
@@ -77,14 +65,18 @@ class App extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Data Set:
-            <input type="text" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3,4]} />
+            <input type="text" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]} />
           </label>
           <input type="submit" value="Submit" />
         </form>
         <div className="display">
           <h3>Permutations</h3>
           <div className="total">total: { this.state.display }</div>
-          <div id="perms"></div>
+          <div id="perms">
+            {this.state.totPerms.map(item => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
         </div>
       </div>
     );
