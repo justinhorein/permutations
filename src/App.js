@@ -51,10 +51,11 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({data: event.target.value.split(',')});
+    // Update data array
+    this.setState({data: event.target.value.trim().split(',')});
+    // Check that input is present
     let error = this.state.error;
     const {value} = event.target;
-
     error = value.length === 0 ? "Input can't be blank!": "";
     this.setState({error:error});
   }
