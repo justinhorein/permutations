@@ -46,16 +46,16 @@ class App extends React.Component {
     let num = math.permutations(count);
     this.setState({display: num})
     // get array of all possible perms and save to state
-    let totPerms = this.permutations(n);
+    let totPerms = this.permutations(n.toString().replace(/\s*$/,'').split(','));
     this.setState({totPerms: totPerms});
   }
 
   handleChange(event) {
     // Update data array
-    this.setState({data: event.target.value.trim().split(',')});
+    this.setState({data: event.target.value.split(',')});
     // Check that input is present
     let error = this.state.error;
-    const {value} = event.target;
+    const value = event.target.value;
     error = value.length === 0 ? "Input can't be blank!": "";
     this.setState({error:error});
   }
@@ -75,17 +75,22 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Data Set:
-            <input type="text" name="input" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]} />
-          </label>
-          <input type="submit" value="Submit" />
-          <div className="error">{this.state.error}</div>
-        </form>
-        <div className="error"></div>
+        <h3>Permutations</h3>
+        <div className="container">
+          <div className="instructions">
+            Please enter data seperated by commas. Spaces are included (except for after last entry).
+          </div>
+          <form onSubmit={this.handleSubmit}>          
+              <h4>Data Set:</h4> 
+              <textarea type="text" style={{height:100, width: 300}} className="box" name="input" value={this.state.data} onChange={this.handleChange} placeholder={[1,2,3]}></textarea>
+            <div className="error">{this.state.error}</div>
+            <input type="submit" className="submit" value="Submit" />
+            
+          </form>
+          
+        </div>
         <div className="display">
-          <h3>Permutations</h3>
+          
           <div className="total">total: { this.state.display }</div>
           <div id="perms">
             {this.state.totPerms.map(item => (
